@@ -15,13 +15,9 @@ import { useToast } from "./ui/use-toast";
 const Navbar = () => {
 
     const { siteName } = useContext(SiteDetailsContext);
-
     const { user, logOut } = useContext(AuthContext);
-
     const { toast } = useToast()
-
     const navLinkIsActive = ({ isActive }) => (isActive ? "text-foreground" : "text-muted-foreground") + " transition-colors hover:text-foreground";
-
     const navLinks = <>
         <NavLink className={navLinkIsActive} to="/">Home</NavLink>
     </>
@@ -30,7 +26,7 @@ const Navbar = () => {
         logOut()
             .then(() => {
                 toast({
-                    variant: "destructive",
+                    variant: "success",
                     description: "Logged out success!",
                 });
             })
