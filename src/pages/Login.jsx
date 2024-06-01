@@ -11,6 +11,8 @@ import { FaGoogle, FaGithub } from "react-icons/fa6";
 import { TbReload } from "react-icons/tb";
 import { useToast } from "@/components/ui/use-toast";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 
 
 const Login = () => {
@@ -30,13 +32,56 @@ const Login = () => {
         return <Navigate to={location?.state ? location.state : '/'}></Navigate>;
     }
 
+    const handleLogin = e => {
+        e.preventDefault();
+
+        setLoginText(
+            <TbReload className="mr-2 h-4 w-4 animate-spin" />
+        )
+        const form = new FormData(e.currentTarget);
+        const email = form.get('email');
+        const password = form.get('password');
+
+        if (email === '') {
+            setError('Please enter your email')
+        }
+
+        if (password === '') {
+            setError('Please enter your password')
+        }
+
+        signIn(email, password)
+            .then(() => {
+                toast({
+                    variant: "success",
+                    description: "Logged in success!",
+                });
+
+                const loggedInUser = { email };
+
+                axiosPublic.post('/jwt', loggedInUser, { withCredentials: true })
+                    .then(res => {
+                        if (res.data.success) {
+                            navigate(location?.state ? location.state : '/');
+                        }
+                    })
+            })
+            .catch(error => {
+                toast({
+                    variant: "destructive",
+                    description: error.message,
+                });
+                setLoginText('Login');
+            })
+    }
+
     const handleLoginWithGoogle = () => {
         setloginWithGoogleText(
             <TbReload className="mr-2 h-4 w-4 animate-spin" />
         )
 
         signInWithGoogle()
-            .then(({user}) => {
+            .then(({ user }) => {
                 const userInfo = {
                     name: user.displayName,
                     email: user.email,
@@ -54,7 +99,35 @@ const Login = () => {
                     variant: "destructive",
                     description: error.message,
                 });
-                setloginWithGoogleText('Google');
+                setloginWithGoogleText('Login with Google');
+            })
+    }
+
+    const handleLoginWithGitHub = () => {
+        setLoginWithGithubText(
+            <TbReload className="mr-2 h-4 w-4 animate-spin" />
+        )
+
+        signInWithGitHub()
+            .then(({ user }) => {
+                const userInfo = {
+                    name: user.displayName,
+                    email: user.email,
+                    type: "user"
+                }
+                axiosPublic.post('/users', userInfo);
+                toast({
+                    variant: "success",
+                    description: "Logged in success!",
+                });
+                navigate(location?.state ? location.state : '/');
+            })
+            .catch(error => {
+                toast({
+                    variant: "destructive",
+                    description: error.message,
+                });
+                setLoginWithGithubText('Login with GitHub');
             })
     }
 
@@ -66,15 +139,27 @@ const Login = () => {
             <Helmet>
                 <title>Login - {siteName}</title>
             </Helmet>
+            {
+                error ?
+                    <Alert variant="destructive">
+                        <ExclamationTriangleIcon className="h-4 w-4" />
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>
+                            {error}
+                        </AlertDescription>
+                    </Alert>
+                    :
+                    ''
+            }
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                     <CardDescription>
-                        Enter your email below to login to your account
+                        Enter your email & password below to login to your account
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-4">
+                    <form onSubmit={handleLogin} className="grid gap-4">
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
@@ -96,16 +181,16 @@ const Login = () => {
                         <Button type="submit" className="w-full">
                             {loginText}
                         </Button>
-                        <Button onClick={handleLoginWithGoogle} variant="outline" className="w-full">
+                        <Button onClick={handleLoginWithGoogle} type="button" variant="outline" className="w-full">
                             <FaGoogle className="mr-2 h-4 w-4" /> {loginWithGoogleText}
                         </Button>
-                        {/* <Button variant="outline" onClick={handleLoginWithGitHub} className="w-full">
+                        <Button variant="outline" type="button" onClick={handleLoginWithGitHub} className="w-full">
                             <FaGithub className="mr-2 h-4 w-4" /> {loginWithGithubText}
-                        </Button> */}
-                    </div>
+                        </Button>
+                    </form>
                     <div className="mt-4 text-center text-sm">
                         Don&apos;t have an account?{" "}
-                        <Link href="#" className="underline">
+                        <Link to="/register" className="underline">
                             Sign up
                         </Link>
                     </div>
