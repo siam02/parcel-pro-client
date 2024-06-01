@@ -1,6 +1,6 @@
 import { FaBox } from "react-icons/fa";
 import { CgMenuLeft } from "react-icons/cg";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -109,7 +109,8 @@ const Navbar = () => {
                             </DropdownMenuContent>
                         </DropdownMenu>
                         :
-                        <Button>Login</Button>
+                        <Link to="/login"><Button>Login</Button></Link>
+                        
                 }
             </div>
         </header>
