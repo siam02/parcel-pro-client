@@ -21,8 +21,10 @@
         --accent-foreground: 221.2 5% 15%;
         --destructive: 0 100% 30%;
         --destructive-foreground: 221.2 5% 90%;
-        --border: 214.3 31.8% 91.4%;;
-        --input: 221.2 30% 26%;
+        --success: #059669;
+        --success-foreground: #34d399;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
         --ring: 221.2 83.2% 53.3%;
         --radius: 1rem;
     }
@@ -44,6 +46,8 @@
         --accent-foreground: 221.2 5% 90%;
         --destructive: 0 100% 30%;
         --destructive-foreground: 221.2 5% 90%;
+        --success: #059669;
+        --success-foreground: #34d399;
         --border: 221.2 30% 26%;
         --input: 221.2 30% 26%;
         --ring: 221.2 83.2% 53.3%;

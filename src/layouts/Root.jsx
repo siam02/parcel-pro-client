@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 
 const Root = () => {
 
@@ -45,6 +46,7 @@ const Root = () => {
                     </label>
                 </Button>
             </main>
+            <Toaster />
             <Footer></Footer>
         </div>
     );
