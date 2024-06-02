@@ -57,15 +57,10 @@ const Login = () => {
                     description: "Logged in success!",
                 });
 
-                const loggedInUser = { email };
+                navigate(location?.state ? location.state : '/');
 
-                axiosPublic.post('/jwt', loggedInUser, { withCredentials: true })
-                    .then(res => {
-                        if (res.data.success) {
-                            navigate(location?.state ? location.state : '/');
-                        }
-                    })
-            })
+            }
+            )
             .catch(error => {
                 toast({
                     variant: "destructive",
@@ -85,7 +80,7 @@ const Login = () => {
                 const userInfo = {
                     name: user.displayName,
                     email: user.email,
-                    type: "user"
+                    type: "User"
                 }
                 axiosPublic.post('/users', userInfo);
                 toast({
@@ -113,7 +108,7 @@ const Login = () => {
                 const userInfo = {
                     name: user.displayName,
                     email: user.email,
-                    type: "user"
+                    type: "User"
                 }
                 axiosPublic.post('/users', userInfo);
                 toast({

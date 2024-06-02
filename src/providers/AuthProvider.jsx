@@ -32,13 +32,9 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    const createUser = (email, password, name, photo) => {
+    const createUser = (email, password) => {
         setLoading(true);
-        return createUserWithEmailAndPassword(auth, email, password).then(() => {
-            updateProfile(auth.currentUser, {
-                displayName: name, photoURL: photo
-            })
-        });
+        return createUserWithEmailAndPassword(auth, email, password);
     }
     const logOut = () => {
         setLoading(true);
@@ -58,7 +54,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const updateUserProfile = (name, photo) => {
-        return updateProfile(user, {displayName: name, photoURL: photo});
+        return updateProfile(auth.currentUser, {displayName: name, photoURL: photo});
     }
 
     useEffect(() => {
