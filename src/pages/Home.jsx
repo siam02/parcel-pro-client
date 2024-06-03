@@ -64,37 +64,33 @@ const Home = () => {
                     </div>
                 </section>
                 <div className="mt-6">
-                    <div className="relative">
-                        <div className="relative fi-container">
-                            <div className="mx-auto">
-                                <dl className="bg-white dark:bg-gray-700 rounded-lg shadow-lg sm:grid sm:grid-cols-3">
-                                    <div className="flex flex-col p-6 text-center border-b border-gray-100 sm:border-0 sm:border-r">
-                                        <dt className="text-2xl text-primary font-bold" id="item-1">
-                                            Parcel Booked
-                                        </dt>
-                                        <dd className="text-3xl mt-2 font-bold" aria-describedby="item-1">
-                                            <CountUp end={100} duration={5}></CountUp>+
-                                        </dd>
-                                    </div>
-                                    <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
-                                        <dt className="text-2xl text-primary font-bold">
-                                            Parcel Delivered
-                                        </dt>
-                                        <dd className="text-3xl mt-2 font-bold">
-                                            <CountUp end={100} duration={6}></CountUp>+
-                                        </dd>
-                                    </div>
-                                    <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
-                                        <dt className="text-2xl text-primary font-bold">
-                                            People Using Our App
-                                        </dt>
-                                        <dd className="text-3xl mt-2 font-bold">
-                                            <CountUp end={100} duration={7}></CountUp>+
-                                        </dd>
-                                    </div>
-                                </dl>
+                    <div className="mx-auto">
+                        <dl className="bg-white dark:bg-gray-700 rounded-lg shadow-lg sm:grid sm:grid-cols-3">
+                            <div className="flex flex-col p-6 text-center border-b border-gray-100 sm:border-0 sm:border-r">
+                                <dt className="text-2xl text-primary font-bold" id="item-1">
+                                    Parcel Booked
+                                </dt>
+                                <dd className="text-3xl mt-2 font-bold" aria-describedby="item-1">
+                                    <CountUp end={100} duration={5}></CountUp>+
+                                </dd>
                             </div>
-                        </div>
+                            <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
+                                <dt className="text-2xl text-primary font-bold">
+                                    Parcel Delivered
+                                </dt>
+                                <dd className="text-3xl mt-2 font-bold">
+                                    <CountUp end={100} duration={6}></CountUp>+
+                                </dd>
+                            </div>
+                            <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
+                                <dt className="text-2xl text-primary font-bold">
+                                    People Using Our App
+                                </dt>
+                                <dd className="text-3xl mt-2 font-bold">
+                                    <CountUp end={100} duration={7}></CountUp>+
+                                </dd>
+                            </div>
+                        </dl>
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useToast } from "@/components/ui/use-toast";
 import { TbReload } from "react-icons/tb";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 
 const Register = () => {
@@ -69,7 +70,9 @@ const Register = () => {
         const photo = form.get('photoURL');
         const email = form.get('email');
         const password = form.get('password');
+        const type = form.get('type');
         const confirmPassword = form.get('confirmPassword');
+
 
         if (password != confirmPassword) {
             setError('Password and Confirm Password Must be same');
@@ -120,7 +123,7 @@ const Register = () => {
                         const userInfo = {
                             name: user.displayName,
                             email: user.email,
-                            type: "User"
+                            type: type
                         }
 
                         axiosPublic.post('/users', userInfo)
@@ -200,6 +203,19 @@ const Register = () => {
                                 placeholder="https://example.com/image.jpg"
                                 required
                             />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="type">Register As</Label>
+                            <RadioGroup name="type" defaultValue="User">
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="User" id="r1" />
+                                    <Label htmlFor="r1">User</Label>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="DeliveryMen" id="r2" />
+                                    <Label htmlFor="r2">Delivery Man</Label>
+                                </div>
+                            </RadioGroup>
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
