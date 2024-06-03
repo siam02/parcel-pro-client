@@ -4,6 +4,8 @@ import { SiteDetailsContext } from "@/providers/SiteDetailsProvider";
 import { useContext } from "react";
 import CountUp from "react-countup";
 import { Helmet } from "react-helmet";
+import Rating from "react-rating";
+import { FaRegStar, FaStar } from "react-icons/fa";
 
 const Home = () => {
     const { siteName } = useContext(SiteDetailsContext);
@@ -111,55 +113,15 @@ const Home = () => {
                             <div className="h-full flex flex-col items-center text-center">
                                 <img
                                     alt="team"
-                                    className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+                                    className="flex-shrink-0 rounded-full h-36 object-cover object-center mb-4"
                                     src="https://dummyimage.com/200x200"
                                 />
                                 <div className="w-full">
-                                    <h2 className="title-font font-medium text-lg text-gray-900">
+                                    <h2 className="title-font font-medium text-2xl text-gray-900">
                                         Alper Kamu
                                     </h2>
-                                    <h3 className="text-gray-500 mb-3">UI Developer</h3>
-                                    <p className="mb-4">
-                                        DIY tote bag drinking vinegar cronut adaptogen squid fanny pack
-                                        vaporware.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-4 lg:w-1/3 md:w-1/2">
-                            <div className="h-full flex flex-col items-center text-center">
-                                <img
-                                    alt="team"
-                                    className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-                                    src="https://dummyimage.com/201x201"
-                                />
-                                <div className="w-full">
-                                    <h2 className="title-font font-medium text-lg text-gray-900">
-                                        Holden Caulfield
-                                    </h2>
-                                    <h3 className="text-gray-500 mb-3">UI Developer</h3>
-                                    <p className="mb-4">
-                                        DIY tote bag drinking vinegar cronut adaptogen squid fanny pack
-                                        vaporware.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="p-4 lg:w-1/3 md:w-1/2">
-                            <div className="h-full flex flex-col items-center text-center">
-                                <img
-                                    alt="team"
-                                    className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-                                    src="https://dummyimage.com/202x202"
-                                />
-                                <div className="w-full">
-                                    <h2 className="title-font font-medium text-lg text-gray-900">
-                                        Atticus Finch
-                                    </h2>
-                                    <h3 className="text-gray-500 mb-3">UI Developer</h3>
-                                    <p className="mb-4">
-                                        DIY tote bag drinking vinegar cronut adaptogen squid fanny pack
-                                        vaporware.
+                                    <p className="mb-4 flex gap-2 text-gray-700 mt-1 items-center justify-center">
+                                        <span>Delivered: 100+ &#x2022; </span><Rating readonly className="text-primary" emptySymbol={<FaRegStar />} fullSymbol={<FaStar />} initialRating={4}></Rating>
                                     </p>
                                 </div>
                             </div>
