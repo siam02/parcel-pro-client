@@ -96,7 +96,77 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-
+            <section className="text-gray-600 mt-24">
+                <div className="container px-5 py-24 mx-auto">
+                    <div className="flex max-w-screen-md mx-auto flex-col text-center w-full mb-20">
+                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+                            The Top Delivery Man
+                        </h2>
+                        <p className="text-gray-500 sm:text-xl dark:text-gray-400">
+                            Meet our top delivery men who consistently deliver excellence and ensure your parcels reach their destination safely and on time.
+                        </p>
+                    </div>
+                    <div className="flex flex-wrap -m-4">
+                        <div className="p-4 lg:w-1/3 md:w-1/2">
+                            <div className="h-full flex flex-col items-center text-center">
+                                <img
+                                    alt="team"
+                                    className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+                                    src="https://dummyimage.com/200x200"
+                                />
+                                <div className="w-full">
+                                    <h2 className="title-font font-medium text-lg text-gray-900">
+                                        Alper Kamu
+                                    </h2>
+                                    <h3 className="text-gray-500 mb-3">UI Developer</h3>
+                                    <p className="mb-4">
+                                        DIY tote bag drinking vinegar cronut adaptogen squid fanny pack
+                                        vaporware.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-4 lg:w-1/3 md:w-1/2">
+                            <div className="h-full flex flex-col items-center text-center">
+                                <img
+                                    alt="team"
+                                    className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+                                    src="https://dummyimage.com/201x201"
+                                />
+                                <div className="w-full">
+                                    <h2 className="title-font font-medium text-lg text-gray-900">
+                                        Holden Caulfield
+                                    </h2>
+                                    <h3 className="text-gray-500 mb-3">UI Developer</h3>
+                                    <p className="mb-4">
+                                        DIY tote bag drinking vinegar cronut adaptogen squid fanny pack
+                                        vaporware.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-4 lg:w-1/3 md:w-1/2">
+                            <div className="h-full flex flex-col items-center text-center">
+                                <img
+                                    alt="team"
+                                    className="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+                                    src="https://dummyimage.com/202x202"
+                                />
+                                <div className="w-full">
+                                    <h2 className="title-font font-medium text-lg text-gray-900">
+                                        Atticus Finch
+                                    </h2>
+                                    <h3 className="text-gray-500 mb-3">UI Developer</h3>
+                                    <p className="mb-4">
+                                        DIY tote bag drinking vinegar cronut adaptogen squid fanny pack
+                                        vaporware.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };
