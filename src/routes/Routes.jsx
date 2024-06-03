@@ -5,8 +5,9 @@ import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
 import Root from "@/layouts/Root";
 import PrivateRoutes from "./PrivateRoutes";
-import Dashboard from "@/pages/Dashboard";
+import Dashboard from "@/pages/Dashboard/Dashboard";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import DashboardRoute from "./DashboardRoute";
 
 const routes = createBrowserRouter([
     {
@@ -27,11 +28,11 @@ const routes = createBrowserRouter([
                 element: <Register></Register>
             },
             {
-                path:'/',
-                element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
+                path:'dashboard',
+                element: <PrivateRoutes><DashboardRoute><DashboardLayout></DashboardLayout></DashboardRoute></PrivateRoutes>,
                 children:[
                     {
-                        path:'/dashboard',
+                        path:'',
                         element:<Dashboard></Dashboard>
                     }
                 ]

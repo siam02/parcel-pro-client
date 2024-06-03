@@ -1,10 +1,11 @@
 
+import useUserType from "@/hooks/useUserType";
 import { NavLink, Outlet } from "react-router-dom"
 
 const DashboardLayout = () => {
 
     const navLinkIsActive = ({ isActive }) => isActive ? "font-semibold text-primary" : "";
-
+    const [userType] = useUserType();
 
     return (
         <div className="flex min-h-screen w-full flex-col">
@@ -16,13 +17,20 @@ const DashboardLayout = () => {
                     <nav
                         className="grid gap-4 text-sm text-muted-foreground"
                     >
-                        <NavLink to="/dashboard" className={navLinkIsActive}>
-                            Home
-                        </NavLink>
-                        <NavLink to="/dashboard/all-parcels" className={navLinkIsActive}>All Parcels</NavLink>
-                        <NavLink to="/dashboard/all-users" className={navLinkIsActive}>All Users</NavLink>
-                        <NavLink to="/dashboard/all-delivery-men" className={navLinkIsActive}>All Delivery Men</NavLink>
-                        <NavLink to="/dashboard/statistics" className={navLinkIsActive}>Statistics</NavLink>
+                        {
+                            userType === "DeliveryMen" ?
+                                <>
+                                    <NavLink to="/dashboard" className={navLinkIsActive}>
+                                        Home
+                                    </NavLink>
+                                    <NavLink to="/dashboard/all-parcels" className={navLinkIsActive}>My Delivery List</NavLink>
+                                    <NavLink to="/dashboard/all-users" className={navLinkIsActive}>My Reviews</NavLink>
+                                </>
+
+                                :
+                                ""
+
+                        }
                     </nav>
                     <div>
                         <Outlet></Outlet>
