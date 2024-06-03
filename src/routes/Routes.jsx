@@ -8,6 +8,9 @@ import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import DashboardRoute from "./DashboardRoute";
+import DeliveryMenRoute from "./DeliveryMenRoute";
+import MyDeliveryList from "@/pages/Dashboard/DeliveryMen/MyDeliveryList";
+import MyReviews from "@/pages/Dashboard/DeliveryMen/MyReviews";
 
 const routes = createBrowserRouter([
     {
@@ -34,6 +37,14 @@ const routes = createBrowserRouter([
                     {
                         path:'',
                         element:<Dashboard></Dashboard>
+                    },
+                    {
+                        path:'my-delivery-list',
+                        element:<DeliveryMenRoute><MyDeliveryList></MyDeliveryList></DeliveryMenRoute>
+                    },
+                    {
+                        path:'my-reviews',
+                        element:<DeliveryMenRoute><MyReviews></MyReviews></DeliveryMenRoute>
                     }
                 ]
             }
