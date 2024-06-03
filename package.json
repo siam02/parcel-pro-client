@@ -25,6 +25,7 @@
     "dotenv": "^16.4.5",
     "firebase": "^10.12.2",
     "localforage": "^1.10.0",
+    "lucide-react": "^0.383.0",
     "match-sorter": "^6.3.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
