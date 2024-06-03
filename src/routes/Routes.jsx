@@ -11,6 +11,9 @@ import DashboardRoute from "./DashboardRoute";
 import DeliveryMenRoute from "./DeliveryMenRoute";
 import MyDeliveryList from "@/pages/Dashboard/DeliveryMen/MyDeliveryList";
 import MyReviews from "@/pages/Dashboard/DeliveryMen/MyReviews";
+import BookParcel from "@/pages/Dashboard/User/BookParcel";
+import MyProfile from "@/pages/Dashboard/User/MyProfile";
+import MyParcels from "@/pages/Dashboard/User/MyParcels";
 
 const routes = createBrowserRouter([
     {
@@ -45,6 +48,18 @@ const routes = createBrowserRouter([
                     {
                         path:'my-reviews',
                         element:<DeliveryMenRoute><MyReviews></MyReviews></DeliveryMenRoute>
+                    },
+                    {
+                        path:'book-parcel',
+                        element:<BookParcel></BookParcel>
+                    },
+                    {
+                        path:'my-profile',
+                        element:<MyProfile></MyProfile>
+                    },
+                    {
+                        path:'my-parcels',
+                        element:<MyParcels></MyParcels>
                     }
                 ]
             }
