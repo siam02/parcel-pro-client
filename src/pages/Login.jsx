@@ -160,6 +160,7 @@ const Login = () => {
                             <Input
                                 id="email"
                                 type="email"
+                                name="email"
                                 placeholder="m@example.com"
                                 required
                             />
@@ -171,7 +172,7 @@ const Login = () => {
                                     Forgot your password?
                                 </Link>
                             </div>
-                            <Input id="password" type="password" required />
+                            <Input id="password" type="password" name="password" required />
                         </div>
                         <Button type="submit" className="w-full">
                             {loginText}
