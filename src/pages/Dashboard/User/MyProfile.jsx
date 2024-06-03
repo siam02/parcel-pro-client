@@ -15,15 +15,26 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { TbReload } from "react-icons/tb";
+import useAxiosSecure from "@/hooks/useAxiosSecure";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
+
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+
+
+
 const MyProfile = () => {
     const { user, updateUserProfile } = useContext(AuthContext);
     const { siteName } = useContext(SiteDetailsContext);
     const [updateText, setUpdateText] = useState('Update Details');
     const [userPhotoURL, setUserPhotoURL] = useState(user.photoURL);
     const [error, setError] = useState(null);
-    const { toast } = useToast()
+    const { toast } = useToast();
+    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
 
-    const handleUpdate = e => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
 
         setUpdateText(
@@ -32,16 +43,59 @@ const MyProfile = () => {
 
         const form = new FormData(e.currentTarget);
         const name = form.get('name');
-        const photoURL = form.get('photoURL');
+        const imageFile = form.get('photoURL');
+        let photoURL = user.photoURL;
+
+        let res;
+
+        if (imageFile.size > 0) {
+            const imageData = new FormData();
+            imageData.append('image', imageFile);
+
+            res = await axiosPublic.post(image_hosting_api, imageData, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            });
+
+            if (res?.data.success) {
+                photoURL = res.data.data.display_url;
+            } else {
+                toast({
+                    variant: "destructive",
+                    description: "Something went wrong",
+                });
+                console.log(res);
+            }
+        }
 
         updateUserProfile(name, photoURL)
             .then(() => {
-                toast({
-                    variant: "success",
-                    description: "Profile updated!",
-                });
-                setUserPhotoURL(photoURL);
-                setUpdateText('Update Details');
+
+                const photo = photoURL;
+                const updateProfile = { name, photo };
+
+                axiosSecure.put(`/users/${user.email}`, updateProfile, { withCredentials: true })
+                    .then(({ data }) => {
+                        if (data.modifiedCount > 0) {
+                            toast({
+                                variant: "success",
+                                description: "Profile updated!",
+                            });
+                            setUserPhotoURL(photoURL);
+                            setUpdateText('Update Details');
+                        }
+                    })
+                    .catch(err => {
+                        toast({
+                            variant: "destructive",
+                            description: err.message,
+                        });
+                        setError(err.message);
+                        setUpdateText('Update Details');
+                    })
+
+
             })
             .catch(error => {
                 toast({
@@ -99,14 +153,19 @@ const MyProfile = () => {
                                 />
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="photoURL">Photo URL</Label>
+                                <Label htmlFor="photoURL">Photo</Label>
                                 <Input
                                     id="photoURL"
+                                    type="file"
+                                    name="photoURL"
+
+                                />
+                                {/* <Input
                                     type="text"
                                     name="photoURL"
                                     defaultValue={userPhotoURL}
                                     required
-                                />
+                                /> */}
                             </div>
                             <div className="form-control">
                                 <Label htmlFor="currentPhoto">Your Current Photo</Label>

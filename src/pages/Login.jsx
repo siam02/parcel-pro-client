@@ -80,6 +80,7 @@ const Login = () => {
                 const userInfo = {
                     name: user.displayName,
                     email: user.email,
+                    photo: user.photoURL,
                     type: "User"
                 }
                 axiosPublic.post('/users', userInfo);
@@ -108,6 +109,7 @@ const Login = () => {
                 const userInfo = {
                     name: user.displayName,
                     email: user.email,
+                    photo: user.photoURL,
                     type: "User"
                 }
                 axiosPublic.post('/users', userInfo);

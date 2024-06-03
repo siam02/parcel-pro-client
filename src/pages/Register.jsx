@@ -123,6 +123,7 @@ const Register = () => {
                         const userInfo = {
                             name: user.displayName,
                             email: user.email,
+                            photo: user.photoURL,
                             type: type
                         }
 
