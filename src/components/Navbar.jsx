@@ -90,23 +90,30 @@ const Navbar = () => {
                     user ?
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="secondary" size="icon" className="rounded-full">
-                                    <FaRegCircleUser className="h-5 w-5" />
-                                    <span className="sr-only">Toggle user menu</span>
-                                </Button>
+                                {
+                                    user.photoURL ?
+                                        <Button variant="ghost" size="icon" className="rounded-full">
+                                            <img className="rounded-full h-8 w-8" src={user.photoURL} />
+                                            <span className="sr-only">Toggle user menu</span>
+                                        </Button>
+                                        :
+                                        <Button variant="secondary" size="icon" className="rounded-full">
+                                            <FaRegCircleUser className="h-5 w-5" />
+                                            <span className="sr-only">Toggle user menu</span>
+                                        </Button>
+                                }
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>Settings</DropdownMenuItem>
-                                <DropdownMenuItem>Support</DropdownMenuItem>
+                                <DropdownMenuItem><Link to="/dashboard" >Dashboard</Link></DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
+                                <DropdownMenuItem className="text-red-600 cursor-pointer hover:!text-red-600" onClick={handleSignOut}>Logout</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                         :
                         <Link to="/login"><Button>Login</Button></Link>
-                        
+
                 }
             </div>
         </header>
