@@ -28,6 +28,18 @@ const DashboardLayout = () => {
                                 ""
 
                         }
+
+                        {
+                            userType === "User" ?
+                            <>
+                                <NavLink to="book-parcel" className={navLinkIsActive}>Book a Parcel</NavLink>
+                                <NavLink to="my-parcels" className={navLinkIsActive}>My Parcels</NavLink>
+                                <NavLink to="my-profile" className={navLinkIsActive}>My Profile</NavLink>
+                            </>
+
+                            :
+                            ""
+                        }
                     </nav>
                     <div>
                         <Outlet></Outlet>
