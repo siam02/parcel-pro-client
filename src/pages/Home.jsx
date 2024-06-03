@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SiteDetailsContext } from "@/providers/SiteDetailsProvider";
 import { useContext } from "react";
+import CountUp from "react-countup";
 import { Helmet } from "react-helmet";
 
 const Home = () => {
@@ -28,7 +29,7 @@ const Home = () => {
             </div>
 
             <div className="mt-24">
-                <section className="bg-white dark:bg-gray-900">
+                <section className="">
                     <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
                         <div className="max-w-screen-md text-center mx-auto mb-8 lg:mb-16">
                             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Our Features</h2>
@@ -60,6 +61,40 @@ const Home = () => {
                         </div>
                     </div>
                 </section>
+                <div className="mt-6">
+                    <div className="relative">
+                        <div className="relative fi-container">
+                            <div className="mx-auto">
+                                <dl className="bg-white dark:bg-gray-700 rounded-lg shadow-lg sm:grid sm:grid-cols-3">
+                                    <div className="flex flex-col p-6 text-center border-b border-gray-100 sm:border-0 sm:border-r">
+                                        <dt className="text-2xl text-primary font-bold" id="item-1">
+                                            Parcel Booked
+                                        </dt>
+                                        <dd className="text-3xl mt-2 font-bold" aria-describedby="item-1">
+                                            <CountUp end={100} duration={5}></CountUp>+
+                                        </dd>
+                                    </div>
+                                    <div className="flex flex-col p-6 text-center border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r">
+                                        <dt className="text-2xl text-primary font-bold">
+                                            Parcel Delivered
+                                        </dt>
+                                        <dd className="text-3xl mt-2 font-bold">
+                                            <CountUp end={100} duration={6}></CountUp>+
+                                        </dd>
+                                    </div>
+                                    <div className="flex flex-col p-6 text-center border-t border-gray-100 sm:border-0 sm:border-l">
+                                        <dt className="text-2xl text-primary font-bold">
+                                            People Using Our App
+                                        </dt>
+                                        <dd className="text-3xl mt-2 font-bold">
+                                            <CountUp end={100} duration={7}></CountUp>+
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
