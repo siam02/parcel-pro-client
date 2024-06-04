@@ -17,6 +17,8 @@ import { Label } from "@/components/ui/label";
 import { TbReload } from "react-icons/tb";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -120,10 +122,13 @@ const MyProfile = () => {
                     </CardDescription>
                     {
                         error ?
-                            <div role="alert" className="alert p-2 mt-4 rounded-lg alert-error">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span><strong>Error!</strong> {error}</span>
-                            </div>
+                            <Alert variant="destructive">
+                                <ExclamationTriangleIcon className="h-4 w-4" />
+                                <AlertTitle>Error</AlertTitle>
+                                <AlertDescription>
+                                    {error}
+                                </AlertDescription>
+                            </Alert>
                             :
                             ''
                     }
@@ -160,12 +165,6 @@ const MyProfile = () => {
                                     name="photoURL"
 
                                 />
-                                {/* <Input
-                                    type="text"
-                                    name="photoURL"
-                                    defaultValue={userPhotoURL}
-                                    required
-                                /> */}
                             </div>
                             <div className="form-control">
                                 <Label htmlFor="currentPhoto">Your Current Photo</Label>
