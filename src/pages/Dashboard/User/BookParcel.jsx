@@ -48,27 +48,12 @@ const BookParcel = () => {
         const receiverName = data.receiverName;
         const receiverPhone = data.receiverPhone;
         const deliveryAddress = data.deliveryAddress;
-        const deliveryDate = data.deliveryDate;
+        const reqDeliveryDate = data.reqDeliveryDate;
         const latitude = parseFloat(data.latitude);
         const longitude = parseFloat(data.longitude);
         const price = parcelWeight <= 2 ? parcelWeight * 50 : 150;
         const status = "pending";
-
-        console.log({
-            name,
-            email,
-            phoneNumber,
-            parcelType,
-            parcelWeight,
-            receiverName,
-            receiverPhone,
-            deliveryAddress,
-            deliveryDate,
-            latitude,
-            longitude,
-            price,
-            status
-        });
+        const bookingDate = new Date().toISOString().slice(0, 10);
 
         const newParcel = {
             name,
@@ -79,11 +64,12 @@ const BookParcel = () => {
             receiverName,
             receiverPhone,
             deliveryAddress,
-            deliveryDate,
+            reqDeliveryDate,
             latitude,
             longitude,
             price,
-            status
+            status,
+            bookingDate
         }
 
         axiosSecure.post('/parcels', newParcel)
@@ -236,17 +222,17 @@ const BookParcel = () => {
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label htmlFor="deliveryDate">Requested Delivery Date</Label>
+                                    <Label htmlFor="reqDeliveryDate">Requested Delivery Date</Label>
 
                                     <Input
-                                        id="deliveryDate"
+                                        id="reqDeliveryDate"
                                         type="date"
                                         min={new Date().toISOString().slice(0, 10)}
-                                        {...register('deliveryDate', { required: true })}
+                                        {...register('reqDeliveryDate', { required: true })}
                                         placeholder="Requested Delivery Date"
-                                        className={errors.deliveryDate && 'border-red-600 bg-red-100'}
+                                        className={errors.reqDeliveryDate && 'border-red-600 bg-red-100'}
                                     />
-                                    <FormError name="deliveryDate" errors={errors}></FormError>
+                                    <FormError name="reqDeliveryDate" errors={errors}></FormError>
                                 </div>
 
                                 <div className="grid gap-2">
