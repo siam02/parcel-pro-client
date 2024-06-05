@@ -14,6 +14,7 @@ import MyReviews from "@/pages/Dashboard/DeliveryMen/MyReviews";
 import BookParcel from "@/pages/Dashboard/User/BookParcel";
 import MyProfile from "@/pages/Dashboard/User/MyProfile";
 import MyParcels from "@/pages/Dashboard/User/MyParcels";
+import UpdateParcel from "@/pages/Dashboard/User/UpdateParcel";
 
 const routes = createBrowserRouter([
     {
@@ -60,6 +61,11 @@ const routes = createBrowserRouter([
                     {
                         path:'my-parcels',
                         element:<MyParcels></MyParcels>
+                    },
+                    {
+                        path:'my-parcels/:id',
+                        element:<UpdateParcel></UpdateParcel>,
+                        loader: ({params}) => fetch(`http://127.0.0.1:5000/parcels-by-id/${params.id}`)
                     }
                 ]
             }

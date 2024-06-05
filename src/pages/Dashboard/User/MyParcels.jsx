@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyParcels = () => {
     const { user } = useAuth();
@@ -95,7 +96,7 @@ const MyParcels = () => {
                                 <TableCell><Badge variant="outline">{parcel.status}</Badge></TableCell>
                                 <TableCell>
                                     <div className="grid grid-cols-2 gap-2 flex-wrap">
-                                        <Button>Update</Button>
+                                        <Link to={`${parcel._id}`} className="flex"><Button className="grow">Update</Button></Link>
                                         <Button onClick={() => handleCancel(parcel._id)} variant="destructive" disabled={parcel.status === 'cancelled' || parcel.status != "pending" ? true : false}>{ parcel.status === 'cancelled' ? "Cancelled" : "Cancel"}</Button>
                                         {
                                             parcel.status === 'delivered' && <Button variant="secondary">Review</Button>
