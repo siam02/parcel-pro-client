@@ -192,7 +192,7 @@ const BookParcel = () => {
                                         type="text"
                                         {...register('receiverName', { required: true })}
                                         placeholder="Receiver’s Name"
-                                        className={errors.parcelWeight && 'border-red-600 bg-red-100'}
+                                        className={errors.receiverName && 'border-red-600 bg-red-100'}
                                     />
                                     <FormError name="receiverName" errors={errors}></FormError>
                                 </div>
@@ -270,7 +270,6 @@ const BookParcel = () => {
                                         id="price"
                                         type="number"
                                         readOnly
-                                        {...register('price')}
                                         value={(watch('parcelWeight') <= 2 ? watch('parcelWeight') * 50 : 150)}
                                         disabled
                                     />

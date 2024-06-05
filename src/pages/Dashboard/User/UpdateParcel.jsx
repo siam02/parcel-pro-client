@@ -24,7 +24,7 @@ import { useLoaderData } from "react-router-dom";
 
 const UpdateParcel = () => {
 
-    const { register, handleSubmit, reset, formState: { errors }, watch } = useForm();
+    const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
 
     const { user } = useAuth();
@@ -36,18 +36,26 @@ const UpdateParcel = () => {
 
     const parcel = useLoaderData();
 
-    const { _id,phoneNumber } = parcel;
+    const { 
+        _id,
+        phoneNumber,
+        parcelType,
+        parcelWeight,
+        receiverName,
+        receiverPhone,
+        deliveryAddress,
+        reqDeliveryDate,
+        latitude,
+        longitude,
+        price
+        } = parcel;
 
     const onSubmit = data => {
-
-        console.log(data);
 
         setSubmitText(
             <TbReload className="mr-2 h-4 w-4 animate-spin" />
         )
 
-        const name = user.displayName;
-        const email = user.email;
         const phoneNumber = data.phoneNumber;
         const parcelType = data.parcelType;
         const parcelWeight = parseInt(data.parcelWeight);
@@ -58,12 +66,8 @@ const UpdateParcel = () => {
         const latitude = parseFloat(data.latitude);
         const longitude = parseFloat(data.longitude);
         const price = parcelWeight <= 2 ? parcelWeight * 50 : 150;
-        const status = "pending";
-        const bookingDate = new Date().toISOString().slice(0, 10);
 
-        const newParcel = {
-            name,
-            email,
+        const updateParcel = {
             phoneNumber,
             parcelType,
             parcelWeight,
@@ -74,33 +78,33 @@ const UpdateParcel = () => {
             latitude,
             longitude,
             price,
-            status,
-            bookingDate
         }
 
-        axiosSecure.put('/parcels', newParcel)
-        .then(({data}) => {
+        console.log(updateParcel);
 
-            if (data.modifiedCount > 0) {
+        axiosSecure.put(`/parcels/${_id}`, updateParcel)
+            .then(({ data }) => {
+
+                if (data.modifiedCount > 0) {
+                    toast({
+                        variant: "success",
+                        description: "Your parcel successfully updated",
+                    });
+                    setError(null);
+                    setSubmitText('Update');
+                }else{
+                    setSubmitText('Update');
+                }
+
+            })
+            .catch(err => {
                 toast({
-                    variant: "success",
-                    description: "Your parcel successfully updated",
+                    variant: "destructive",
+                    description: err.message,
                 });
-
-                reset();
-                setError(null);
+                setError(err.message);
                 setSubmitText('Update');
-            }
-            
-        })
-        .catch(err => {
-            toast({
-                variant: "destructive",
-                description: err.message,
-            });
-            setError(err.message);
-            setSubmitText('Update');
-        })
+            })
 
     }
 
@@ -175,6 +179,7 @@ const UpdateParcel = () => {
                                         type="text"
                                         {...register('parcelType', { required: true })}
                                         placeholder="Parcel Type"
+                                        defaultValue={parcelType}
                                         className={errors.parcelType && 'border-red-600 bg-red-100'}
                                     />
                                     <FormError name="parcelType" errors={errors}></FormError>
@@ -187,6 +192,7 @@ const UpdateParcel = () => {
                                         type="number"
                                         {...register('parcelWeight', { required: true, min: 1 })}
                                         placeholder="Parcel Weight"
+                                        defaultValue={parcelWeight}
                                         className={errors.parcelWeight && 'border-red-600 bg-red-100'}
                                     />
                                     <FormError name="parcelWeight" errors={errors}></FormError>
@@ -199,7 +205,8 @@ const UpdateParcel = () => {
                                         type="text"
                                         {...register('receiverName', { required: true })}
                                         placeholder="Receiver’s Name"
-                                        className={errors.parcelWeight && 'border-red-600 bg-red-100'}
+                                        className={errors.receiverName && 'border-red-600 bg-red-100'}
+                                        defaultValue={receiverName}
                                     />
                                     <FormError name="receiverName" errors={errors}></FormError>
                                 </div>
@@ -212,6 +219,7 @@ const UpdateParcel = () => {
                                         {...register('receiverPhone', { required: true, pattern: /^[0-9]{11}$/ })}
                                         placeholder="01234567891"
                                         className={errors.receiverPhone && 'border-red-600 bg-red-100'}
+                                        defaultValue={receiverPhone}
                                     />
                                     <FormError name="receiverPhone" errors={errors}></FormError>
                                 </div>
@@ -224,6 +232,7 @@ const UpdateParcel = () => {
                                         {...register('deliveryAddress', { required: true })}
                                         placeholder="Parcel Delivery Address"
                                         className={errors.deliveryAddress && 'border-red-600 bg-red-100'}
+                                        defaultValue={deliveryAddress}
                                     />
                                     <FormError name="deliveryAddress" errors={errors}></FormError>
                                 </div>
@@ -238,6 +247,7 @@ const UpdateParcel = () => {
                                         {...register('reqDeliveryDate', { required: true })}
                                         placeholder="Requested Delivery Date"
                                         className={errors.reqDeliveryDate && 'border-red-600 bg-red-100'}
+                                        defaultValue={reqDeliveryDate}
                                     />
                                     <FormError name="reqDeliveryDate" errors={errors}></FormError>
                                 </div>
@@ -252,6 +262,7 @@ const UpdateParcel = () => {
                                         {...register('latitude', { required: true, min: -90, max: 90 })}
                                         placeholder="Delivery Address Latitude"
                                         className={errors.latitude && 'border-red-600 bg-red-100'}
+                                        defaultValue={latitude}
                                     />
                                     <FormError name="latitude" errors={errors}></FormError>
                                 </div>
@@ -265,20 +276,22 @@ const UpdateParcel = () => {
                                         step="any"
                                         {...register('longitude', { required: true, min: -90, max: 90 })}
                                         placeholder="Delivery Address Longitude"
+                                        defaultValue={longitude}
                                         className={errors.longitude && 'border-red-600 bg-red-100'}
                                     />
                                     <FormError name="longitude" errors={errors}></FormError>
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label htmlFor="latitude">Price (Tk)</Label>
+                                    <Label htmlFor="price">Price (Tk)</Label>
 
                                     <Input className="relative"
                                         id="price"
                                         type="number"
+                                        defaultValue={price}
                                         readOnly
-                                        {...register('price')}
-                                        value={(watch('parcelWeight') <= 2 ? watch('parcelWeight') * 50 : 150)}
+                                        // {...register('price', {min:50} )}
+                                        value={watch('parcelWeight') && (watch('parcelWeight') <= 2 ? watch('parcelWeight') * 50 : 150)}
                                         disabled
                                     />
                                 </div>

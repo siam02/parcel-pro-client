@@ -28,7 +28,7 @@ const MyParcels = () => {
     const { data: parcels = [], refetch } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/parcels/${user.email}`);
+            const res = await axiosSecure.get(`/parcels-by-email/${user.email}`);
             setLoading(false);
             return res.data;
         }
@@ -96,7 +96,9 @@ const MyParcels = () => {
                                 <TableCell><Badge variant="outline">{parcel.status}</Badge></TableCell>
                                 <TableCell>
                                     <div className="grid grid-cols-2 gap-2 flex-wrap">
-                                        <Link to={`${parcel._id}`} className="flex"><Button className="grow">Update</Button></Link>
+                                        {
+                                            parcel.status === "pending" && <Link to={`${parcel._id}`} className="flex"><Button className="grow">Update</Button></Link>
+                                        }
                                         <Button onClick={() => handleCancel(parcel._id)} variant="destructive" disabled={parcel.status === 'cancelled' || parcel.status != "pending" ? true : false}>{ parcel.status === 'cancelled' ? "Cancelled" : "Cancel"}</Button>
                                         {
                                             parcel.status === 'delivered' && <Button variant="secondary">Review</Button>
