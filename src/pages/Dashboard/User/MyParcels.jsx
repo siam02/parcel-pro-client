@@ -13,6 +13,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Swal from "sweetalert2";
@@ -23,6 +29,8 @@ const MyParcels = () => {
     const { siteName } = useContext(SiteDetailsContext);
     const axiosSecure = useAxiosSecure();
     const [loading, setLoading] = useState(true);
+    const [showParcels, setShowParcels] = useState([]);
+    const [filtered, setFiltered] = useState(false);
 
 
     const { data: parcels = [], refetch } = useQuery({
@@ -30,6 +38,7 @@ const MyParcels = () => {
         queryFn: async () => {
             const res = await axiosSecure.get(`/parcels-by-email/${user.email}`);
             setLoading(false);
+            setShowParcels(res.data);
             return res.data;
         }
     })
@@ -52,7 +61,7 @@ const MyParcels = () => {
 
                 axiosSecure.patch(`/parcels/cancel/${id}`)
                     .then(res => {
-                        if (res.data.modifiedCount  > 0) {
+                        if (res.data.modifiedCount > 0) {
                             refetch();
                             Swal.fire({
                                 title: "Cancelled!",
@@ -65,51 +74,88 @@ const MyParcels = () => {
         });
     }
 
+    const handleFilter = (filter) => {
+        setLoading(true);
+        const newParcels = parcels.filter(parcel => parcel.status === filter);
+        setShowParcels(newParcels);
+        setLoading(false);
+        setFiltered(true);
+    }
+
+    const resetFilter = () => {
+        setLoading(true);
+        setFiltered(false);
+        refetch();
+    }
+
 
     return (
         <div>
             <Helmet>
                 <title>My Parcels - {siteName}</title>
             </Helmet>
+            <div className="mb-4 flex md:flex-row flex-col md:justify-between justify-center md:text-left text-center items-center">
+                <h1 className="text-xl font-bold">My Parcels</h1>
+                <div className="flex flex-col gap-2">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild><Button variant="outline">Filter by Status</Button></DropdownMenuTrigger>
+                        <DropdownMenuContent className="*:cursor-pointer">
+                            <DropdownMenuItem onClick={() => handleFilter("pending")}>Pending</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleFilter("onWay")}>On the Way</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleFilter("delivered")}>Delivered</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleFilter("returned")}>Returned</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleFilter("cancelled")}>Cancelled</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    {
+                        filtered && <Button onClick={resetFilter}>Reset Filter</Button>
+                    }
+                </div>
+            </div>
             <div className="md:w-[61vw] xl:w-full sm:w-[90vw] w-[80vw] overflow-x-auto">
-                <Table className="min-w-max">
-                    <TableCaption>A list of your recent booked parcels.</TableCaption>
-                    <TableHeader>
-                        <TableRow className="*:text-center">
-                            <TableHead>Parcel Type</TableHead>
-                            <TableHead>Req. Delivery</TableHead>
-                            <TableHead>Approx. Delivery</TableHead>
-                            <TableHead>Booking Date</TableHead>
-                            <TableHead>Delivery Men ID</TableHead>
-                            <TableHead>Booking Status</TableHead>
-                            <TableHead>Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {parcels.map((parcel) => (
-                            <TableRow className="*:text-center" key={parcel._id}>
-                                <TableCell>{parcel.parcelType}</TableCell>
-                                <TableCell>{parcel.reqDeliveryDate}</TableCell>
-                                <TableCell>{parcel.approxDeliveryDate || "N/A"}</TableCell>
-                                <TableCell>{parcel.bookingDate}</TableCell>
-                                <TableCell>{parcel.deliveryManID || "N/A"}</TableCell>
-                                <TableCell><Badge variant="outline">{parcel.status}</Badge></TableCell>
-                                <TableCell>
-                                    <div className="grid grid-cols-2 gap-2 flex-wrap">
-                                        {
-                                            parcel.status === "pending" && <Link to={`${parcel._id}`} className="flex"><Button className="grow">Update</Button></Link>
-                                        }
-                                        <Button onClick={() => handleCancel(parcel._id)} variant="destructive" disabled={parcel.status === 'cancelled' || parcel.status != "pending" ? true : false}>{ parcel.status === 'cancelled' ? "Cancelled" : "Cancel"}</Button>
-                                        {
-                                            parcel.status === 'delivered' && <Button variant="secondary">Review</Button>
-                                        }
-                                        <Button variant="success" disabled={parcel.status === 'cancelled' ? true : false}>Pay</Button>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                {
+                    loading ?
+                        <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
+                        :
+                        <Table className="min-w-max">
+                            <TableCaption>A list of your recent booked parcels.</TableCaption>
+                            <TableHeader>
+                                <TableRow className="*:text-center">
+                                    <TableHead>Parcel Type</TableHead>
+                                    <TableHead>Req. Delivery</TableHead>
+                                    <TableHead>Approx. Delivery</TableHead>
+                                    <TableHead>Booking Date</TableHead>
+                                    <TableHead>Delivery Men ID</TableHead>
+                                    <TableHead>Booking Status</TableHead>
+                                    <TableHead>Actions</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {showParcels.map((parcel) => (
+                                    <TableRow className="*:text-center" key={parcel._id}>
+                                        <TableCell>{parcel.parcelType}</TableCell>
+                                        <TableCell>{parcel.reqDeliveryDate}</TableCell>
+                                        <TableCell>{parcel.approxDeliveryDate || "N/A"}</TableCell>
+                                        <TableCell>{parcel.bookingDate}</TableCell>
+                                        <TableCell>{parcel.deliveryManID || "N/A"}</TableCell>
+                                        <TableCell><Badge variant="outline">{parcel.status}</Badge></TableCell>
+                                        <TableCell>
+                                            <div className="grid grid-cols-2 gap-2 flex-wrap">
+                                                {
+                                                    parcel.status === "pending" && <Link to={`${parcel._id}`} className="flex"><Button className="grow">Update</Button></Link>
+                                                }
+                                                <Button onClick={() => handleCancel(parcel._id)} variant="destructive" disabled={parcel.status === 'cancelled' || parcel.status != "pending" ? true : false}>{parcel.status === 'cancelled' ? "Cancelled" : "Cancel"}</Button>
+                                                {
+                                                    parcel.status === 'delivered' && <Button variant="secondary">Review</Button>
+                                                }
+                                                <Button variant="success" disabled={parcel.status === 'cancelled' ? true : false}>Pay</Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                }
             </div>
 
         </div>
