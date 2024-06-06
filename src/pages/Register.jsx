@@ -116,7 +116,6 @@ const Register = () => {
 
         createUser(email, password)
             .then(({ user }) => {
-                console.log(user);
                 updateUserProfile(name, photo)
                     .then(() => {
 
@@ -149,11 +148,11 @@ const Register = () => {
                             variant: "destructive",
                             description: error.message,
                         });
-                        console.log(error);
+                        console.error(error);
                         setRegisterText('Create an account');
                     })
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
 
     }
 

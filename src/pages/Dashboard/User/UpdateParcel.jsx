@@ -80,8 +80,6 @@ const UpdateParcel = () => {
             price,
         }
 
-        console.log(updateParcel);
-
         axiosSecure.put(`/parcels/${_id}`, updateParcel)
             .then(({ data }) => {
 

@@ -67,7 +67,7 @@ const MyProfile = () => {
                     variant: "destructive",
                     description: "Something went wrong",
                 });
-                console.log(res);
+                console.error(res);
             }
         }
 
