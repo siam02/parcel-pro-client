@@ -1,7 +1,7 @@
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import { SiteDetailsContext } from "@/providers/SiteDetailsProvider";
 import { useQuery } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import Chart from "react-apexcharts";
 
@@ -9,14 +9,12 @@ import Chart from "react-apexcharts";
 const Statistics = () => {
 
     const { siteName } = useContext(SiteDetailsContext);
-    const [loading, setLoading] = useState();
     const axiosSecure = useAxiosSecure();
 
-    const { data: statistics = [] } = useQuery({
+    const { data: statistics = [], isLoading } = useQuery({
         queryKey: ['statistics'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/statistics`);
-            setLoading(false);
             return res.data;
         }
     })
@@ -75,7 +73,7 @@ const Statistics = () => {
             </div>
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
                 {
-                    loading ?
+                    isLoading ?
                         <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                         :
 

@@ -33,11 +33,10 @@ const MyParcels = () => {
     const [filtered, setFiltered] = useState(false);
 
 
-    const { data: parcels = [], refetch } = useQuery({
+    const { data: parcels = [], refetch, isLoading } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/parcels-by-email/${user.email}`);
-            setLoading(false);
             setShowParcels(res.data);
             return res.data;
         }
@@ -114,7 +113,7 @@ const MyParcels = () => {
             </div>
             <div className="md:w-[61vw] xl:w-full sm:w-[90vw] w-[80vw] overflow-x-auto">
                 {
-                    loading ?
+                    isLoading ?
                         <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                         :
                         <Table className="min-w-max">
