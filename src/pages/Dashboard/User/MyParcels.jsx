@@ -28,7 +28,6 @@ const MyParcels = () => {
     const { user } = useAuth();
     const { siteName } = useContext(SiteDetailsContext);
     const axiosSecure = useAxiosSecure();
-    const [loading, setLoading] = useState(true);
     const [showParcels, setShowParcels] = useState([]);
     const [filtered, setFiltered] = useState(false);
 
@@ -41,10 +40,6 @@ const MyParcels = () => {
             return res.data;
         }
     })
-
-    if (!loading) {
-        console.log(parcels);
-    }
 
     const handleCancel = id => {
         Swal.fire({
@@ -74,15 +69,12 @@ const MyParcels = () => {
     }
 
     const handleFilter = (filter) => {
-        setLoading(true);
         const newParcels = parcels.filter(parcel => parcel.status === filter);
         setShowParcels(newParcels);
-        setLoading(false);
         setFiltered(true);
     }
 
     const resetFilter = () => {
-        setLoading(true);
         setFiltered(false);
         refetch();
     }
@@ -100,7 +92,7 @@ const MyParcels = () => {
                         <DropdownMenuTrigger asChild><Button variant="outline">Filter by Status</Button></DropdownMenuTrigger>
                         <DropdownMenuContent className="*:cursor-pointer">
                             <DropdownMenuItem onClick={() => handleFilter("pending")}>Pending</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleFilter("onWay")}>On the Way</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleFilter("On The Way")}>On the Way</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => handleFilter("delivered")}>Delivered</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => handleFilter("returned")}>Returned</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => handleFilter("cancelled")}>Cancelled</DropdownMenuItem>
@@ -137,7 +129,7 @@ const MyParcels = () => {
                                         <TableCell>{parcel.approxDeliveryDate || "N/A"}</TableCell>
                                         <TableCell>{parcel.bookingDate}</TableCell>
                                         <TableCell>{parcel.deliveryManID || "N/A"}</TableCell>
-                                        <TableCell><Badge variant="outline">{parcel.status}</Badge></TableCell>
+                                        <TableCell><Badge variant={parcel.status === "cancelled" ? "destructive" : "outline"}>{parcel.status}</Badge></TableCell>
                                         <TableCell>
                                             <div className="grid grid-cols-2 gap-2 flex-wrap">
                                                 {

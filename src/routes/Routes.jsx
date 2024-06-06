@@ -17,6 +17,7 @@ import MyParcels from "@/pages/Dashboard/User/MyParcels";
 import UpdateParcel from "@/pages/Dashboard/User/UpdateParcel";
 import AdminRoute from "./AdminRoute";
 import Statistics from "@/pages/Dashboard/Admin/Statistics";
+import AllParcels from "@/pages/Dashboard/Admin/AllParcels";
 
 const routes = createBrowserRouter([
     {
@@ -72,6 +73,10 @@ const routes = createBrowserRouter([
                     {
                         path:'statistics',
                         element:<AdminRoute><Statistics></Statistics></AdminRoute>
+                    },
+                    {
+                        path:'all-parcels',
+                        element:<AdminRoute><AllParcels></AllParcels></AdminRoute>
                     }
                 ]
             }
