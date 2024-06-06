@@ -256,7 +256,7 @@ const BookParcel = () => {
                                         id="longitude"
                                         type="number"
                                         step="any"
-                                        {...register('longitude', { required: true, min: -90, max: 90 })}
+                                        {...register('longitude', { required: true, min: -180, max: 180 })}
                                         placeholder="Delivery Address Longitude"
                                         className={errors.longitude && 'border-red-600 bg-red-100'}
                                     />

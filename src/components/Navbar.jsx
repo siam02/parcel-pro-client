@@ -65,7 +65,7 @@ const Navbar = () => {
                 <SheetContent side="left">
                     <nav className="grid gap-6 text-lg font-medium">
                         <NavLink
-                            href="#"
+                            to="/"
                             className="flex items-center gap-2 text-lg font-semibold"
                         >
                             <FaBox className="h-6 w-6" />
