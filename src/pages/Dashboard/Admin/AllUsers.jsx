@@ -15,25 +15,46 @@ import {
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
 
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
+
 
 
 
 const AllUsers = () => {
     const { siteName } = useContext(SiteDetailsContext);
     const [bookingCounts, setBookingCounts] = useState({});
+    const [currentPage, setCurrentPage] = useState(0);
 
     const axiosSecure = useAxiosSecure();
 
-    const { data: users = [], isLoading, refetch } = useQuery({
-        queryKey: ['users'],
+    const { data: count = 0, } = useQuery({
+        queryKey: ['count'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/users`);
+            const res = await axiosSecure.get(`/userCount`);
+            return res.data?.count;
+        }
+    })
+
+    const numberOfPages = Math.ceil(count / 5);
+
+    const pages = [...Array(numberOfPages).keys()];
+
+    const { data: users = [], isLoading, refetch } = useQuery({
+        queryKey: ['users', currentPage],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users?page=${currentPage}&size=5`);
             const men = res.data;
             men.map(man => bookingCount(man.email));
             return res.data;
         }
     })
-
 
     const bookingCount = (email) => {
 
@@ -75,6 +96,20 @@ const AllUsers = () => {
         });
     }
 
+    const handlePrevPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+            
+        }
+    }
+
+    const handleNextPage = () => {
+        if (currentPage < pages.length - 1) {
+            setCurrentPage(currentPage + 1);
+            
+        }
+    }
+
     return (
         <div>
             <Helmet>
@@ -107,10 +142,10 @@ const AllUsers = () => {
                                         <TableCell>{man.phoneNumber}</TableCell>
                                         <TableCell>{bookingCounts[man.email] !== undefined ? bookingCounts[man.email] : <span className="loading loading-xs loading-spinner text-primary"></span>}</TableCell>
                                         <TableCell>
-                                                <Button variant="success" onClick={ () => handleChangeType(man._id, "DeliveryMen")}>Make Delivery Men</Button>
+                                            <Button variant="success" onClick={() => handleChangeType(man._id, "DeliveryMen")}>Make Delivery Men</Button>
                                         </TableCell>
                                         <TableCell>
-                                                <Button onClick={ () => handleChangeType(man._id, "Admin")}>Make Admin</Button>
+                                            <Button onClick={() => handleChangeType(man._id, "Admin")}>Make Admin</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -118,6 +153,28 @@ const AllUsers = () => {
                         </Table>
                 }
             </div>
+
+            {
+                numberOfPages > 1 ?
+
+                    <div className="mt-4">
+                        <Pagination>
+                            <PaginationContent className="flex flex-wrap">
+                                <PaginationItem className="cursor-pointer" onClick={handlePrevPage}>
+                                    <PaginationPrevious />
+                                </PaginationItem>
+                                {
+                                    pages.map(page => <PaginationItem key={page} className="cursor-pointer"> <PaginationLink isActive={currentPage === page ? true : false} onClick={() => setCurrentPage(page)}>{page}</PaginationLink></PaginationItem>)
+                                }
+                                <PaginationItem className="cursor-pointer" onClick={handleNextPage}>
+                                    <PaginationNext />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    </div>
+                    :
+                    ""
+            }
         </div>
     );
 };
