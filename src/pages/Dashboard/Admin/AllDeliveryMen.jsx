@@ -19,6 +19,7 @@ import {
 const AllDeliveryMen = () => {
     const { siteName } = useContext(SiteDetailsContext);
     const [deliveryCounts, setDeliveryCounts] = useState({});
+    const [averageRatings, setAverageRatings] = useState({});
 
     const axiosSecure = useAxiosSecure();
 
@@ -28,6 +29,7 @@ const AllDeliveryMen = () => {
             const res = await axiosSecure.get(`/users/delivery-men`);
             const men = res.data;
             men.map(man => deliveryCount(man._id));
+            men.map(man => deliveryManRating(man._id));
             return res.data;
         }
     })
@@ -43,6 +45,19 @@ const AllDeliveryMen = () => {
                 }));
             })
             .catch(error => console.error('Error fetching delivery count:', error));
+
+    }
+
+    const deliveryManRating = (id) => {
+
+        axiosSecure.get(`/delivery-man-average-rating/${id}`)
+            .then(({ data }) => {
+                setAverageRatings(prevCounts => ({
+                    ...prevCounts,
+                    [id]: data.averageRating,
+                }));
+            })
+            .catch(error => console.error('Error fetching delivery man average rating:', error));
 
     }
 
@@ -76,7 +91,7 @@ const AllDeliveryMen = () => {
                                         <TableCell>{man.name}</TableCell>
                                         <TableCell>{man.phoneNumber}</TableCell>
                                         <TableCell>{deliveryCounts[man._id] !== undefined ? deliveryCounts[man._id] : <span className="loading loading-xs loading-spinner text-primary"></span>}</TableCell>
-                                        <TableCell>{man.reqDeliveryDate}</TableCell>
+                                        <TableCell>{averageRatings[man._id] !== undefined ? averageRatings[man._id] : <span className="loading loading-xs loading-spinner text-primary"></span>}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
