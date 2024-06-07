@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { SiteDetailsContext } from "@/providers/SiteDetailsProvider";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
 import {
     Table,
@@ -18,6 +18,7 @@ import {
 
 const AllDeliveryMen = () => {
     const { siteName } = useContext(SiteDetailsContext);
+    const [deliveryCounts, setDeliveryCounts] = useState({});
 
     const axiosSecure = useAxiosSecure();
 
@@ -25,10 +26,25 @@ const AllDeliveryMen = () => {
         queryKey: ['deliveryMen'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/delivery-men`);
+            const men = res.data;
+            men.map(man => deliveryCount(man._id));
             return res.data;
         }
     })
 
+
+    const deliveryCount = (id) => {
+
+        axiosSecure.get(`/delivery-man-delivered-count/${id}`)
+            .then(({ data }) => {
+                setDeliveryCounts(prevCounts => ({
+                    ...prevCounts,
+                    [id]: data.count,
+                }));
+            })
+            .catch(error => console.error('Error fetching delivery count:', error));
+
+    }
 
     return (
         <div>
@@ -59,7 +75,7 @@ const AllDeliveryMen = () => {
                                     <TableRow className="*:text-center" key={man._id}>
                                         <TableCell>{man.name}</TableCell>
                                         <TableCell>{man.phoneNumber}</TableCell>
-                                        <TableCell>{man.bookingDate}</TableCell>
+                                        <TableCell>{deliveryCounts[man._id] !== undefined ? deliveryCounts[man._id] : <span className="loading loading-xs loading-spinner text-primary"></span>}</TableCell>
                                         <TableCell>{man.reqDeliveryDate}</TableCell>
                                     </TableRow>
                                 ))}
