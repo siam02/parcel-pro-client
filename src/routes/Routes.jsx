@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import Statistics from "@/pages/Dashboard/Admin/Statistics";
 import AllParcels from "@/pages/Dashboard/Admin/AllParcels";
 import AllDeliveryMen from "@/pages/Dashboard/Admin/AllDeliveryMen";
+import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
 
 const routes = createBrowserRouter([
     {
@@ -82,7 +83,12 @@ const routes = createBrowserRouter([
                     {
                         path:'all-delivery-men',
                         element:<AdminRoute><AllDeliveryMen></AllDeliveryMen></AdminRoute>
+                    },
+                    {
+                        path:'all-users',
+                        element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
                     }
+
                 ]
             }
         ]
