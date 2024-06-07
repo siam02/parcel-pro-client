@@ -19,6 +19,7 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import useUser from "@/hooks/useUser";
 
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -35,6 +36,7 @@ const MyProfile = () => {
     const { toast } = useToast();
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
+    const { userDetailsPending, ...userData } = useUser();
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -46,6 +48,7 @@ const MyProfile = () => {
         const form = new FormData(e.currentTarget);
         const name = form.get('name');
         const imageFile = form.get('photoURL');
+        const phoneNumber = form.get('phoneNumber');
         let photoURL = user.photoURL;
 
         let res;
@@ -75,7 +78,7 @@ const MyProfile = () => {
             .then(() => {
 
                 const photo = photoURL;
-                const updateProfile = { name, photo };
+                const updateProfile = { name, photo, phoneNumber };
 
                 axiosSecure.put(`/users/${user.email}`, updateProfile, { withCredentials: true })
                     .then(({ data }) => {
@@ -85,6 +88,8 @@ const MyProfile = () => {
                                 description: "Profile updated!",
                             });
                             setUserPhotoURL(photoURL);
+                            setUpdateText('Update Details');
+                        } else {
                             setUpdateText('Update Details');
                         }
                     })
@@ -114,69 +119,84 @@ const MyProfile = () => {
                 <title>Update Profile - {siteName}</title>
             </Helmet>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Update Profile</CardTitle>
-                    <CardDescription>
-                        Update your profile anytime at ease
-                    </CardDescription>
-                    {
-                        error ?
-                            <Alert variant="destructive">
-                                <ExclamationTriangleIcon className="h-4 w-4" />
-                                <AlertTitle>Error</AlertTitle>
-                                <AlertDescription>
-                                    {error}
-                                </AlertDescription>
-                            </Alert>
-                            :
-                            ''
-                    }
-                </CardHeader>
-                <form onSubmit={handleUpdate}>
-                    <CardContent>
-                        <div className="grid gap-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value={user.email}
-                                    readOnly
-                                    disabled
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Your Name</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    defaultValue={user.displayName}
-                                    required
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="photoURL">Photo</Label>
-                                <Input
-                                    id="photoURL"
-                                    type="file"
-                                    name="photoURL"
+            {
+                userDetailsPending ? <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div> :
 
-                                />
-                            </div>
-                            <div className="form-control">
-                                <Label htmlFor="currentPhoto">Your Current Photo</Label>
-                                <img src={userPhotoURL} width={150} height={150} className="mt-2 rounded-md" alt="" />
-                            </div>
-                        </div>
-                    </CardContent>
-                    <CardFooter className="border-t px-6 py-4">
-                        <Button>{updateText}</Button>
-                    </CardFooter>
-                </form>
-            </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Update Profile</CardTitle>
+                            <CardDescription>
+                                Update your profile anytime at ease
+                            </CardDescription>
+                            {
+                                error ?
+                                    <Alert variant="destructive">
+                                        <ExclamationTriangleIcon className="h-4 w-4" />
+                                        <AlertTitle>Error</AlertTitle>
+                                        <AlertDescription>
+                                            {error}
+                                        </AlertDescription>
+                                    </Alert>
+                                    :
+                                    ''
+                            }
+                        </CardHeader>
+                        <form onSubmit={handleUpdate}>
+                            <CardContent>
+                                <div className="grid gap-4">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="email">Email</Label>
+                                        <Input
+                                            id="email"
+                                            type="email"
+                                            name="email"
+                                            value={user.email}
+                                            readOnly
+                                            disabled
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="name">Your Name</Label>
+                                        <Input
+                                            id="name"
+                                            type="text"
+                                            name="name"
+                                            defaultValue={user.displayName}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="phoneNumber">Your Phone Number</Label>
+                                        <Input
+                                            id="phoneNumber"
+                                            type="text"
+                                            name="phoneNumber"
+                                            defaultValue={userData.phoneNumber}
+                                            required
+                                            placeholder="01234567891"
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="photoURL">Photo</Label>
+                                        <Input
+                                            id="photoURL"
+                                            type="file"
+                                            name="photoURL"
+
+                                        />
+                                    </div>
+                                    <div className="form-control">
+                                        <Label htmlFor="currentPhoto">Your Current Photo</Label>
+                                        <img src={userPhotoURL} width={150} height={150} className="mt-2 rounded-md" alt="" />
+                                    </div>
+                                </div>
+                            </CardContent>
+                            <CardFooter className="border-t px-6 py-4">
+                                <Button>{updateText}</Button>
+                            </CardFooter>
+                        </form>
+                    </Card>
+            }
         </div>
     );
 };

@@ -18,6 +18,7 @@ import UpdateParcel from "@/pages/Dashboard/User/UpdateParcel";
 import AdminRoute from "./AdminRoute";
 import Statistics from "@/pages/Dashboard/Admin/Statistics";
 import AllParcels from "@/pages/Dashboard/Admin/AllParcels";
+import AllDeliveryMen from "@/pages/Dashboard/Admin/AllDeliveryMen";
 
 const routes = createBrowserRouter([
     {
@@ -77,6 +78,10 @@ const routes = createBrowserRouter([
                     {
                         path:'all-parcels',
                         element:<AdminRoute><AllParcels></AllParcels></AdminRoute>
+                    },
+                    {
+                        path:'all-delivery-men',
+                        element:<AdminRoute><AllDeliveryMen></AllDeliveryMen></AdminRoute>
                     }
                 ]
             }

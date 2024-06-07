@@ -34,8 +34,6 @@ const BookParcel = () => {
 
     const onSubmit = data => {
 
-        console.log(data);
-
         setSubmitText(
             <TbReload className="mr-2 h-4 w-4 animate-spin" />
         )

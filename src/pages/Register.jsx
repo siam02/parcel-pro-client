@@ -67,6 +67,7 @@ const Register = () => {
 
         const form = new FormData(e.currentTarget);
         const name = form.get('name');
+        const phoneNumber = form.get('phoneNumber');
         const photo = form.get('photoURL');
         const email = form.get('email');
         const password = form.get('password');
@@ -123,6 +124,7 @@ const Register = () => {
                             name: user.displayName,
                             email: user.email,
                             photo: user.photoURL,
+                            phoneNumber: phoneNumber,
                             type: type
                         }
 
@@ -191,6 +193,16 @@ const Register = () => {
                                 name="name"
                                 type="text"
                                 placeholder="Albert Einstain"
+                                required
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="phoneNumber">Phone Number</Label>
+                            <Input
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                type="text"
+                                placeholder="01234567891"
                                 required
                             />
                         </div>
