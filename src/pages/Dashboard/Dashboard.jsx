@@ -1,4 +1,3 @@
-import useUser from "@/hooks/useUser";
 import useUserType from "@/hooks/useUserType";
 import { AuthContext } from "@/providers/AuthProvider";
 import { SiteDetailsContext } from "@/providers/SiteDetailsProvider";
@@ -10,9 +9,6 @@ const Dashboard = () => {
     const { siteName } = useContext(SiteDetailsContext);
     const {user} = useContext(AuthContext);
     const [userType, userTypePending] = useUserType();
-    const userData = useUser({userEmail: "siam.jaman02@gmail.com"});
-
-    console.log(userData);
 
     if (userTypePending) {
         return <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
