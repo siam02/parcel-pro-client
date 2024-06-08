@@ -1,12 +1,7 @@
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card"
-import { Button } from "./ui/button";
 import Rating from "react-rating";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 
