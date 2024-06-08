@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -109,7 +108,6 @@ const MyParcels = () => {
                         <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                         :
                         <Table className="min-w-max">
-                            <TableCaption>A list of your recent booked parcels.</TableCaption>
                             <TableHeader>
                                 <TableRow className="*:text-center">
                                     <TableHead>Parcel Type</TableHead>

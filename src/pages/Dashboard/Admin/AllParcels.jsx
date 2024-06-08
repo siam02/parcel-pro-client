@@ -7,7 +7,6 @@ import withReactContent from 'sweetalert2-react-content';
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -138,7 +137,6 @@ const AllParcels = () => {
                         <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                         :
                         <Table className="min-w-max">
-                            <TableCaption>A list of your recent booked parcels.</TableCaption>
                             <TableHeader>
                                 <TableRow className="*:text-center">
                                     <TableHead>User&apos;s Name</TableHead>

@@ -6,7 +6,6 @@ import useAxiosSecure from "@/hooks/useAxiosSecure";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -125,7 +124,6 @@ const AllUsers = () => {
                         <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
                         :
                         <Table className="min-w-max">
-                            <TableCaption>A list of your recent booked parcels.</TableCaption>
                             <TableHeader>
                                 <TableRow className="*:text-center">
                                     <TableHead>User&apos;s Name</TableHead>
