@@ -137,6 +137,7 @@ const MyParcels = () => {
                 const userImage = document.getElementById('userImage').value;
                 const feedback = document.getElementById('feedback').value;
                 const deliveryManID = document.getElementById('deliveryManID').value;
+                const reviewDate = new Date().toISOString().slice(0, 10);
 
 
                 console.log(userName, userImage, ratingValue, feedback, deliveryManID);
@@ -145,12 +146,12 @@ const MyParcels = () => {
                     MySwal.showValidationMessage('Please fillup all fields');
                     return false;
                 }
-                return { userName, userImage, rating: ratingValue, feedback, deliveryManID };
+                return { userName, userImage, rating: ratingValue, reviewDate, feedback, deliveryManID };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                const { userName, userImage, rating, feedback, deliveryManID } = result.value;
-                const review = { userName, userImage, rating, feedback, deliveryManID }
+                const { userName, userImage, rating, reviewDate, feedback, deliveryManID } = result.value;
+                const review = { userName, userImage, rating, reviewDate, feedback, deliveryManID }
                 axiosSecure.post(`/delivery-man/review`, review)
                     .then(({ data }) => {
                         if (data.insertedId) {
