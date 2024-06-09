@@ -4,12 +4,11 @@ import { SiteDetailsContext } from "@/providers/SiteDetailsProvider";
 import { useContext } from "react";
 import CountUp from "react-countup";
 import { Helmet } from "react-helmet";
-import Rating from "react-rating";
-import { FaRegStar, FaStar } from "react-icons/fa";
 import { FaLocationDot, FaTruck } from "react-icons/fa6";
 import { MdSupportAgent } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import DeliveryMan from "@/components/DeliveryMan";
 
 
 const Home = () => {
@@ -38,6 +37,14 @@ const Home = () => {
         queryFn: async () => {
             const res = await axiosPublic.get(`/deliveredParcelsCount`);
             return res.data?.count;
+        }
+    })
+
+    const { data: deliveryMen = [] } = useQuery({
+        queryKey: ['deliveryMen'],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/top-delivery-men`);
+            return res.data;
         }
     })
 
@@ -139,23 +146,9 @@ const Home = () => {
                         </p>
                     </div>
                     <div className="flex flex-wrap -m-4">
-                        <div className="p-4 lg:w-1/3 md:w-1/2">
-                            <div className="h-full flex flex-col items-center text-center">
-                                <img
-                                    alt="team"
-                                    className="flex-shrink-0 rounded-full h-36 object-cover object-center mb-4"
-                                    src="https://dummyimage.com/200x200"
-                                />
-                                <div className="w-full">
-                                    <h2 className="title-font font-medium text-2xl text-gray-900">
-                                        Alper Kamu
-                                    </h2>
-                                    <p className="mb-4 flex gap-2 text-gray-700 mt-1 items-center justify-center">
-                                        <span>Delivered: 100+ &#x2022; </span><Rating readonly className="text-primary" emptySymbol={<FaRegStar />} fullSymbol={<FaStar />} initialRating={4}></Rating>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            deliveryMen.map(man => <DeliveryMan key={man._id} man={man}></DeliveryMan>)
+                        }
                     </div>
                 </div>
             </section>
