@@ -33,7 +33,7 @@ const Navbar = () => {
             .catch(error => {
                 toast({
                     variant: "destructive",
-                    description: error.messagee,
+                    description: error.message,
                 });
             })
     }

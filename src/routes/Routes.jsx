@@ -20,6 +20,8 @@ import Statistics from "@/pages/Dashboard/Admin/Statistics";
 import AllParcels from "@/pages/Dashboard/Admin/AllParcels";
 import AllDeliveryMen from "@/pages/Dashboard/Admin/AllDeliveryMen";
 import AllUsers from "@/pages/Dashboard/Admin/AllUsers";
+import Payment from "@/pages/Dashboard/User/Payment";
+import PaymentSuccess from "@/pages/Dashboard/User/PaymentSuccess";
 
 const routes = createBrowserRouter([
     {
@@ -68,9 +70,18 @@ const routes = createBrowserRouter([
                         element:<MyParcels></MyParcels>
                     },
                     {
+                        path:'payment/:id',
+                        element:<Payment></Payment>,
+                        loader: ({params}) => fetch(`http://127.0.0.1:5000/parcels-by-id/${params.id}`)
+                    },
+                    {
                         path:'my-parcels/:id',
                         element:<UpdateParcel></UpdateParcel>,
                         loader: ({params}) => fetch(`http://127.0.0.1:5000/parcels-by-id/${params.id}`)
+                    },
+                    {
+                        path:'payment-success',
+                        element:<PaymentSuccess></PaymentSuccess>
                     },
                     {
                         path:'statistics',

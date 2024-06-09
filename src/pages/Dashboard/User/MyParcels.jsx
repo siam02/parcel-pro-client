@@ -228,7 +228,10 @@ const MyParcels = () => {
                                                 {
                                                     parcel.status === 'delivered' && <Button onClick={() => handleReview(parcel)} variant="secondary">Review</Button>
                                                 }
-                                                <Button variant="success" disabled={parcel.status === 'cancelled' ? true : false}>Pay</Button>
+                                                {
+                                                    parcel.status === 'cancelled' || <Link to={parcel.paymentStatus === "Paid" ? "" : `/dashboard/payment/${parcel._id}`} className="flex"><Button className="grow" disabled={parcel.paymentStatus === "Paid" ? true : false} variant="success">{ parcel.paymentStatus === "Paid" ? "Paid" : "Pay" }</Button></Link>
+                                                }
+                                                
                                             </div>
                                         </TableCell>
                                     </TableRow>
