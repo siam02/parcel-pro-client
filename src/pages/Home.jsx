@@ -40,7 +40,7 @@ const Home = () => {
         }
     })
 
-    const { data: deliveryMen = [] } = useQuery({
+    const { data: deliveryMen = [], isLoading } = useQuery({
         queryKey: ['deliveryMen'],
         queryFn: async () => {
             const res = await axiosPublic.get(`/top-delivery-men`);
@@ -147,8 +147,15 @@ const Home = () => {
                     </div>
                     <div className="flex flex-wrap -m-4">
                         {
-                            deliveryMen.map(man => <DeliveryMan key={man._id} man={man}></DeliveryMan>)
+                            isLoading ? <div className="flex justify-center my-10"><span className="loading loading-lg loading-spinner text-primary"></span></div>
+                                :
+                                <>
+                                    {
+                                        deliveryMen.map(man => <DeliveryMan key={man._id} man={man}></DeliveryMan>)
+                                    }
+                                </>
                         }
+
                     </div>
                 </div>
             </section>
