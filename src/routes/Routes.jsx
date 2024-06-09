@@ -72,12 +72,12 @@ const routes = createBrowserRouter([
                     {
                         path:'payment/:id',
                         element:<Payment></Payment>,
-                        loader: ({params}) => fetch(`http://127.0.0.1:5000/parcels-by-id/${params.id}`)
+                        loader: ({params}) => fetch(`https://parcel-pro-server-beta.vercel.app/parcels-by-id/${params.id}`)
                     },
                     {
                         path:'my-parcels/:id',
                         element:<UpdateParcel></UpdateParcel>,
-                        loader: ({params}) => fetch(`http://127.0.0.1:5000/parcels-by-id/${params.id}`)
+                        loader: ({params}) => fetch(`https://parcel-pro-server-beta.vercel.app/parcels-by-id/${params.id}`)
                     },
                     {
                         path:'payment-success',
