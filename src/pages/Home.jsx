@@ -19,9 +19,9 @@ const Home = () => {
                 <div className="hero-overlay rounded-3xl bg-opacity-60"></div>
                 <div className="hero-content py-28 text-center text-neutral-content">
                     <div className="max-w-2xl flex flex-col items-center text-white">
-                        <h1 className="text-7xl font-black">{siteName}</h1>
-                        <h2 className="mb-3 text-2xl font-bold">Delivering Your Parcels with Speed and Care</h2>
-                        <p className="mb-5 text-lg">At ParcelPro, we are committed to providing a seamless and reliable parcel delivery service.</p>
+                        <h1 className="md:text-7xl text-4xl font-black">{siteName}</h1>
+                        <h2 className="mb-3 sm:text-2xl text-xl font-bold">Delivering Your Parcels with Speed and Care</h2>
+                        <p className="mb-5 sm:text-lg text-base">At ParcelPro, we are committed to providing a seamless and reliable parcel delivery service.</p>
                         <div className="flex w-full max-w-sm items-center space-x-2">
                             <Input type="search" className="bg-white dark:border-0" placeholder="Search......" />
                             <Button type="submit">Search</Button>
