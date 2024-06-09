@@ -18,9 +18,6 @@ const ViewLocation = ({ parcel }) => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={position}>
-                            <Popup>
-                                Resident eState
-                            </Popup>
                         </Marker>
                     </MapContainer>
                     <div className="modal-action">
