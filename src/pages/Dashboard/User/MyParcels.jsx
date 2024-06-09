@@ -229,7 +229,7 @@ const MyParcels = () => {
                                                     parcel.status === 'delivered' && <Button onClick={() => handleReview(parcel)} variant="secondary">Review</Button>
                                                 }
                                                 {
-                                                    parcel.status === 'cancelled' || <Link to={parcel.paymentStatus === "Paid" ? "" : `/dashboard/payment/${parcel._id}`} className="flex"><Button className="grow" disabled={parcel.paymentStatus === "Paid" ? true : false} variant="success">{ parcel.paymentStatus === "Paid" ? "Paid" : "Pay" }</Button></Link>
+                                                    parcel.status === 'cancelled' || <Link to={parcel.paymentStatus === "Paid" ? "" : `/dashboard/payment/${parcel._id}`} className={`flex ${ parcel.paymentStatus === "Paid" && 'cursor-default' }`}><Button className="grow" disabled={parcel.paymentStatus === "Paid" ? true : false} variant="success">{ parcel.paymentStatus === "Paid" ? "Paid" : "Pay" }</Button></Link>
                                                 }
                                                 
                                             </div>
