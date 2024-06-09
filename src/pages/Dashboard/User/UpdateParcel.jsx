@@ -266,13 +266,13 @@ const UpdateParcel = () => {
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label htmlFor="latitude">Delivery Address Longitude</Label>
+                                    <Label htmlFor="longitude">Delivery Address Longitude</Label>
 
                                     <Input
                                         id="longitude"
                                         type="number"
                                         step="any"
-                                        {...register('longitude', { required: true, min: -90, max: 90 })}
+                                        {...register('longitude', { required: true, min: -180, max: 180 })}
                                         placeholder="Delivery Address Longitude"
                                         defaultValue={longitude}
                                         className={errors.longitude && 'border-red-600 bg-red-100'}
@@ -288,7 +288,6 @@ const UpdateParcel = () => {
                                         type="number"
                                         defaultValue={price}
                                         readOnly
-                                        // {...register('price', {min:50} )}
                                         value={watch('parcelWeight') && (watch('parcelWeight') <= 2 ? watch('parcelWeight') * 50 : 150)}
                                         disabled
                                     />

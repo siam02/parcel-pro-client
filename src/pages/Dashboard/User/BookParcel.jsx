@@ -248,7 +248,7 @@ const BookParcel = () => {
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label htmlFor="latitude">Delivery Address Longitude</Label>
+                                    <Label htmlFor="longitude">Delivery Address Longitude</Label>
 
                                     <Input
                                         id="longitude"
