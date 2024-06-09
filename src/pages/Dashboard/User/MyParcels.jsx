@@ -218,7 +218,7 @@ const MyParcels = () => {
                                         <TableCell>{parcel.approxDeliveryDate || "N/A"}</TableCell>
                                         <TableCell>{parcel.bookingDate}</TableCell>
                                         <TableCell>{parcel.deliveryManID || "N/A"}</TableCell>
-                                        <TableCell><Badge variant={parcel.status === "cancelled" ? "destructive" : "outline"}>{parcel.status}</Badge></TableCell>
+                                        <TableCell><Badge variant={parcel.status === "cancelled" ? "destructive" : parcel.status === "delivered" ? "success" : "outline"}>{parcel.status}</Badge></TableCell>
                                         <TableCell>
                                             <div className="grid grid-cols-2 gap-2 flex-wrap">
                                                 {

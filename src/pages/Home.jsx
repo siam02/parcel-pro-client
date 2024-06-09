@@ -139,7 +139,7 @@ const Home = () => {
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex max-w-screen-md mx-auto flex-col text-center w-full mb-20">
                         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                            The Top Delivery Man
+                            The Top Delivery Men
                         </h2>
                         <p className="text-gray-500 sm:text-xl dark:text-gray-400">
                             Meet our top delivery men who consistently deliver excellence and ensure your parcels reach their destination safely and on time.
