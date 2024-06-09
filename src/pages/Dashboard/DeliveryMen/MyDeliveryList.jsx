@@ -141,19 +141,6 @@ const MyDeliveryList = () => {
                         </Table>
                 }
             </div>
-
-            <MapContainer center={position} zoom={13} style={{ height: '100%', width: '100%', borderRadius: '12px' }} scrollWheelZoom={false}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={position}>
-                    <Popup>
-                        Resident eState
-                    </Popup>
-                </Marker>
-            </MapContainer>
-
         </div>
     );
 };
