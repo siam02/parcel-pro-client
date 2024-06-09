@@ -14,11 +14,17 @@ import {
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
 import useUser from "@/hooks/useUser";
+import ViewLocation from "@/components/ViewLocation";
+
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 const MyDeliveryList = () => {
     const { siteName } = useContext(SiteDetailsContext);
     const axiosSecure = useAxiosSecure();
     const { userDetailsPending, ID } = useUser();
+
+    const position = [23.79637967864563, 90.36189107847785]
 
 
     const { data: parcels = [], refetch, isLoading } = useQuery({
@@ -122,11 +128,11 @@ const MyDeliveryList = () => {
                                         <TableCell>{parcel.approxDeliveryDate}</TableCell>
                                         <TableCell>{parcel.receiverPhone}</TableCell>
                                         <TableCell>{parcel.deliveryAddress}</TableCell>
-                                        <TableCell><Button>View Location</Button></TableCell>
+                                        <TableCell><ViewLocation parcel={parcel}></ViewLocation></TableCell>
                                         <TableCell>
                                             <div className="grid grid-cols-2 gap-2 flex-wrap">
-                                                <Button onClick={() => handleCancel(parcel._id)} disabled={parcel.status === "cancelled" || parcel.status === "delivered" ? true : false } variant="destructive">{parcel.status === 'cancelled' ? "Cancelled" : "Cancel"}</Button>
-                                                <Button onClick={() => handleDeivery(parcel._id)} variant="success" disabled={parcel.status === 'cancelled' || parcel.status === "delivered" ? true : false}>{ parcel.status === "delivered" ? 'Delivered' : 'Deliver'}</Button>
+                                                <Button onClick={() => handleCancel(parcel._id)} disabled={parcel.status === "cancelled" || parcel.status === "delivered" ? true : false} variant="destructive">{parcel.status === 'cancelled' ? "Cancelled" : "Cancel"}</Button>
+                                                <Button onClick={() => handleDeivery(parcel._id)} variant="success" disabled={parcel.status === 'cancelled' || parcel.status === "delivered" ? true : false}>{parcel.status === "delivered" ? 'Delivered' : 'Deliver'}</Button>
                                             </div>
                                         </TableCell>
                                     </TableRow>
@@ -135,6 +141,18 @@ const MyDeliveryList = () => {
                         </Table>
                 }
             </div>
+
+            <MapContainer center={position} zoom={13} style={{ height: '100%', width: '100%', borderRadius: '12px' }} scrollWheelZoom={false}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={position}>
+                    <Popup>
+                        Resident eState
+                    </Popup>
+                </Marker>
+            </MapContainer>
 
         </div>
     );
