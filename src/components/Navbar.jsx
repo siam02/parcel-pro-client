@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { FaRegCircleUser } from "react-icons/fa6";
+import { FaRegBell, FaRegCircleUser } from "react-icons/fa6";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger, } from "@/components/ui/sheet"
 import { useContext } from "react";
@@ -86,6 +86,9 @@ const Navbar = () => {
                         />
                     </div>
                 </form>
+                <div>
+                    <Button variant="outline" size="icon" className="rounded-full"><FaRegBell className="h-4 w-4" /></Button>
+                </div>
                 {
                     user ?
                         <DropdownMenu>
