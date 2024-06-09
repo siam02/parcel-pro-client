@@ -158,7 +158,7 @@ const AllParcels = () => {
                                         <TableCell>{parcel.price}</TableCell>
                                         <TableCell><Badge variant={parcel.status === "cancelled" ? "destructive" : parcel.status === "delivered" ? "success" : "outline"}>{parcel.status}</Badge></TableCell>
                                         <TableCell>
-                                            <Button onClick={() => handleManage(parcel)}>Manage</Button>
+                                            <Button  disabled={parcel.status === "cancelled" ? true : false } onClick={() => handleManage(parcel)}>Manage</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}
