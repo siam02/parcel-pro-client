@@ -262,7 +262,7 @@ const BookParcel = () => {
                                 </div>
 
                                 <div className="grid gap-2">
-                                    <Label htmlFor="latitude">Price (Tk)</Label>
+                                    <Label htmlFor="price">Price (Tk)</Label>
 
                                     <Input
                                         id="price"
