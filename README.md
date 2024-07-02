@@ -46,12 +46,14 @@ npm install
 3. Create a .env file in the root directory and add your Firebase config keys:
 
 ```env
-REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your-firebase-auth-domain
-REACT_APP_FIREBASE_PROJECT_ID=your-firebase-project-id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your-firebase-storage-bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-firebase-messaging-sender-id
-REACT_APP_FIREBASE_APP_ID=your-firebase-app-id
+VITE_APIKEY=your-firebase-api-key
+VITE_AUTHDOMAIN=your-firebase-auth-domain
+VITE_PROJECTID=your-firebase-project-id
+VITE_STORAGEBUCKET=your-firebase-storage-bucket
+VITE_MESSAGINGSENDERID=your-firebase-messaging-sender-id
+VITE_APPID=your-firebase-app-id
+VITE_IMAGE_HOSTING_KEY=imgbb-image-hosting-key
+VITE_PAYMENT_GATEWAY_PK=stripe-public-key
 ```
 
 4. Start the development server:
