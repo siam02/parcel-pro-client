@@ -43,7 +43,7 @@ cd southeast-explorer
 npm install
 ```
 
-3. Create a .env file in the root directory and add your Firebase config keys:
+3. Create a .env.local file in the root directory and add your Firebase config keys and other details:
 
 ```env
 VITE_APIKEY=your-firebase-api-key
